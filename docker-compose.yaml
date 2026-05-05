@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7.42
+    container_name: mysql-replica
+    restart: unless-stopped
+    
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_DATABASE: tims
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_password
+    
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./config/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./backup:/backup
+
+    ports:
+      - "10.0.0.3:3303:3306"
+
+    networks:
+      - mysql-replica-network
+    
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+networks:
+  mysql-replica-network:
+    driver: bridge
