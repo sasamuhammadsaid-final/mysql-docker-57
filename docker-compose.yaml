@@ -18,7 +18,7 @@ services:
       - ./backup:/backup
 
     ports:
-      - "10.0.0.3:3303:3306"
+      - "3303:3306"
 
     networks:
       - mysql-replica-network
